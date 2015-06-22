@@ -13,7 +13,8 @@ var UserSchema = new Schema({
   },
   hashedPassword: String,
   provider: String,
-  salt: String
+  salt: String,
+  activated: Boolean
 });
 
 /**
@@ -50,6 +51,8 @@ UserSchema
     };
   });
 
+
+
 /**
  * Validations
  */
@@ -67,6 +70,7 @@ UserSchema
   .validate(function(hashedPassword) {
     return hashedPassword.length;
   }, 'Password cannot be blank');
+
 
 // Validate email is not taken
 UserSchema

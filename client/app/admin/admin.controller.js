@@ -14,4 +14,12 @@ angular.module('raApp')
         }
       });
     };
+
+    $scope.activate = function(user) {
+      $http.put('/api/users/'+user._id+'/activation').success(function(data, status, headers, config) {
+        user.activated = true;
+      }).
+        error(function(data, status, headers, config) {
+        });;
+    };
   });

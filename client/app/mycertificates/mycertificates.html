@@ -1,0 +1,25 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <p>Hier findest du alle von dir angelegten Zertifikate. Du kannst bestehende Zertifikate entfernen oder neue anlegen</p>
+  <table class="table table-striped">
+    <thead>
+    <th>Zertifikatname</th>
+    <th>Erstellungsdatum</th>
+    <th>Ablaufdatum</th>
+    <th class="pull-right">Löschen</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="cert in certificates">
+      <td>{{cert.name}}</td>
+      <td>{{cert.date}}</td>
+      <td>{{cert.revokeDate}}</td>
+      <td>
+        <a ng-click="delete(cert)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+
+</div>

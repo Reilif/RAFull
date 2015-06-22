@@ -47,12 +47,24 @@ exports.show = function (req, res, next) {
   });
 };
 
+exports.destroy = function(req, res) {
+  User.findByIdAndRemove(req.params.id, function(err, user) {
+    if(err) return res.send(500, err);
+    return res.send(204);
+  });
+};
 /**
  * Deletes a user
  * restriction: 'admin'
+
  */
-exports.destroy = function(req, res) {
-  User.findByIdAndRemove(req.params.id, function(err, user) {
+
+/**
+ * Activates a user
+ * restriction: 'admin'
+ */
+exports.activate = function(req, res) {
+  User.findByIdAndUpdate(req.params.id,{activated:true}, function(err, user) {
     if(err) return res.send(500, err);
     return res.send(204);
   });
