@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var fs = require('fs');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -53,6 +54,10 @@ exports.destroy = function(req, res) {
     return res.send(204);
   });
 };
+
+exports.download = function(req, res) {
+  res.download('./server/cert/client1.pfx','client1.pfx');
+};
 /**
  * Deletes a user
  * restriction: 'admin'
@@ -64,7 +69,13 @@ exports.destroy = function(req, res) {
  * restriction: 'admin'
  */
 exports.activate = function(req, res) {
-  User.findByIdAndUpdate(req.params.id,{activated:true}, function(err, user) {
+  var data = req.body;
+  var adr = {};
+  adr.zip = data.zip;
+  adr.street= data.street;
+  adr.state= data.state;
+  adr.country = data.country;
+  User.findByIdAndUpdate(req.params.id,{activated:true, adr:adr, idnr: data.idnr}, function(err, user) {
     if(err) return res.send(500, err);
     return res.send(204);
   });

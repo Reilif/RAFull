@@ -7,6 +7,7 @@
       <th>Name</th>
       <th>E-Mail Adresse</th>
       <th>Freischalten</th>
+      <th>Client-Certificate</th>
       <th class="pull-right">Löschen</th>
     </thead>
     <tbody>
@@ -14,10 +15,15 @@
       <td>{{user.name}}</td>
       <td>{{user.email}}</td>
       <td>
-        <button type="button" class="btn btn-primary " ng-click="activate(user)"  ng-show="!user.activated">
+        <button type="button" class="btn btn-primary " ng-click="open(user)"  ng-show="!user.activated">
           Benutzer freischalten
         </button>
         <span class="glyphicon glyphicon-check" ng-show="user.activated"></span>
+      </td>
+      <td>
+        <button type="button" class="btn btn-primary " ng-click="download(user)"  ng-show="user.activated">
+          Zertifikat downloaden
+        </button>
       </td>
       <td>
         <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
@@ -26,5 +32,37 @@
     </tbody>
 
   </table>
-
 </div>
+
+<script type="text/ng-template" id="myModalContent.html">
+  <div class="modal-header ">
+    <h3 class="modal-title">Freischaltung!</h3>
+  </div>
+  <div class="modal-body">
+    <label>Name</label>
+    <input type="text" class="form-control" ng-model="user.name"
+           disabled/>
+    <label>E-Mail</label>
+    <input type="text" class="form-control" ng-model="user.email"
+           disabled/>
+    <label>Straße/Hausnr.</label>
+    <input type="text"  class="form-control" ng-model="data.street"
+           />
+    <label>PLZ</label>
+    <input type="text"  class="form-control" ng-model="data.zip"
+           />
+    <label>Staat/Bundesland</label>
+    <input type="text"  class="form-control" ng-model="data.state"
+           />
+    <label>Land</label>
+    <input type="text"  class="form-control" ng-model="data.country"
+           />
+    <label>Personalausweisnummer</label>
+    <input type="text"  class="form-control" ng-model="data.idnr"
+           />
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+</script>
