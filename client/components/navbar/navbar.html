@@ -15,7 +15,7 @@
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
         <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Benutzerliste</a></li>
-        <li ng-show="isActivated()" ng-class="{active: isActive('/certificates')}"><a href="/settings">Zertifikate<span class="glyphicon glyphicon-cog"></span></a></li>
+        <li ng-show="isActivated() && isCertified()" ng-class="{active: isActive('/certificates')}"><a href="/settings">Zertifikate<span class="glyphicon glyphicon-cog"></span></a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

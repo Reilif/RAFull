@@ -5,7 +5,7 @@ var Certificates = require('./certificates.model');
 
 // Get list of certificatess
 exports.index = function(req, res) {
-  Certificates.find(function (err, certificatess) {
+  Certificates.find({owner:req.body.owner}, function (err, certificatess) {
     if(err) { return handleError(res, err); }
     return res.json(200, certificatess);
   });

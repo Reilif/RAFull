@@ -10,6 +10,8 @@ angular.module('raApp')
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
+    $scope.isActivated = Auth.isActivated;
+    $scope.isCertified = Auth.isCertified();
     $scope.getCurrentUser = Auth.getCurrentUser;
 
     $scope.logout = function() {

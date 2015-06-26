@@ -146,6 +146,15 @@ angular.module('raApp')
       },
 
       /**
+       * Check if a user is activated
+       *
+       * @return {Boolean}
+       */
+      isCertified: function(){
+        return currentUser.certed
+      },
+
+      /**
        * Get auth token
        */
       getToken: function() {

@@ -1,12 +1,14 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+  ObjectId = Schema.ObjectId;
 
 var CertificatesSchema = new Schema({
   name: String,
-  info: String,
-  active: Boolean
+  createDate: Date,
+  expireDate: Date,
+  owner: ObjectId
 });
 
 module.exports = mongoose.model('Certificates', CertificatesSchema);
