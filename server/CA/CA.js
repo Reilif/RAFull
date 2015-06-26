@@ -8,19 +8,21 @@
 /**
  * Erzeugt das Client Certificate
  */
-function createClientCertificate(user) {
+exports.createClientCertificate = function (user) {
 
 }
 
 /**
  * Erzeugt das Certificate
  */
-function createCertificate(user) {
+exports.signCertificate = function (csr) {
 
 }
+
+
 /**
  * Revoced Certificate
  */
-function revokeCertificate(certificate) {
+exports.revokeCertificate = function(certificate) {
 
 }
