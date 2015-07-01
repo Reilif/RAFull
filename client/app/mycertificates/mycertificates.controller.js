@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('raApp')
-  .controller('MycertificatesCtrl', function ($scope) {
+  .controller('MycertificatesCtrl', function ($scope,  $http, Auth) {
     $scope.certificates = [];
-
-    $http.get('/api/certificatess').success(function(certificates) {
+    var user = Auth.getCurrentUser();
+    $scope.formdata={userid: user._id};
+    $http.get('/api/certificatess/my/'+user._id).success(function(certificates) {
       $scope.certificates = certificates;
     });
 
@@ -19,4 +20,13 @@ angular.module('raApp')
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };
+
+    $scope.onSuccess = function(response){
+      console.log(response);
+    }
+
+    $scope.download = function(cert){
+      window.open('/api/certificatess/'+cert._id);
+    };
+
   });

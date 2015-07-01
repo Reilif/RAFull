@@ -43,7 +43,7 @@ angular.module('raApp')
 
     $scope.activate = function(data) {
       $http.put('/api/users/'+data.user._id+'/activation',data).success(function(data, status, headers, config) {
-        data.user.activated = true;
+        data.activated = true;
       }).
         error(function(data, status, headers, config) {
         });

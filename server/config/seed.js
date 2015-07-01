@@ -10,14 +10,14 @@ var User = require('../api/user/user.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
-    name : 'Erstelle eigene Zertifikate',
-    info : 'Integration with popular tools such as Bower, Grunt, Karma, Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, Stylus, Sass, CoffeeScript, and Less.',
+    name : 'RA',
+    info : 'RA'
   }, {
-    name : 'Verwalte deine Zertifikate',
-    info : 'Built with a powerful and fun stack: MongoDB, Express, AngularJS, and Node.'
+    name : 'CA',
+    info : 'CA'
   },  {
-    name : 'SICHERHEIT',
-    info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
+    name : 'VA',
+    info : 'VA'
   });
 });
 
@@ -26,7 +26,8 @@ User.find({}).remove(function() {
     provider: 'local',
     name: 'Test User',
     email: 'test@test.com',
-    password: 'test'
+    password: 'test',
+      activated: true
   }, {
     provider: 'local',
     role: 'admin',

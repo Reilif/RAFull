@@ -151,7 +151,11 @@ angular.module('raApp')
        * @return {Boolean}
        */
       isCertified: function(){
-        return currentUser.certed
+        console.log("Zert: "+currentUser.certed);
+        console.log("Activ: "+currentUser.activated);
+        var cert = currentUser.certed && currentUser.activated;
+        console.log(cert);
+        return cert;
       },
 
       /**

@@ -15,12 +15,17 @@ var UserSchema = new Schema({
   provider: String,
   salt: String,
   activated: Boolean,
+  certed: Boolean,
   idnr: String,
   adr: {
     zip: String,
     street: String,
     state: String,
     country: String
+  },
+  cert: {
+    data: Buffer,
+    created:{type:Boolean, default:false}
   }
 });
 

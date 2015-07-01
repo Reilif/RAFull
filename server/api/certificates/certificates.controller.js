@@ -2,10 +2,12 @@
 
 var _ = require('lodash');
 var Certificates = require('./certificates.model');
+var util = require('util');
+var fs = require('fs');
 
 // Get list of certificatess
 exports.index = function(req, res) {
-  Certificates.find(function (err, certificatess) {
+  Certificates.find({owner:req.params.owner},function (err, certificatess) {
     if(err) { return handleError(res, err); }
     return res.json(200, certificatess);
   });
@@ -16,13 +18,31 @@ exports.show = function(req, res) {
   Certificates.findById(req.params.id, function (err, certificates) {
     if(err) { return handleError(res, err); }
     if(!certificates) { return res.send(404); }
-    return res.json(certificates);
+
+    res.setHeader('Content-disposition', 'attachment; filename=cert.pfx');
+    res.setHeader('Content-type', certificates.file.contentType);
+    return res.end(certificates.file.data);
   });
 };
 
 // Creates a new certificates in the DB.
 exports.create = function(req, res) {
-  Certificates.create(req.body, function(err, certificates) {
+  console.log(req.files);
+  console.log(req.body);
+
+  var data = fs.readFileSync(req.files.file.path);
+
+  var cert = {};
+
+  cert.name = "Test";
+  cert.date = new Date();
+  cert.revokeDate = new Date();
+  cert.file = {};
+  cert.file.data = data;
+  cert.file.contentType = req.files.file.type;
+  cert.owner = req.body.userid;
+
+  Certificates.create(cert, function(err, certificates) {
     if(err) { return handleError(res, err); }
     return res.json(201, certificates);
   });

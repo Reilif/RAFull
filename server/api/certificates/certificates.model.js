@@ -5,8 +5,10 @@ var mongoose = require('mongoose'),
 
 var CertificatesSchema = new Schema({
   name: String,
-  info: String,
-  active: Boolean
+  date: Date,
+  revokeDate: Date,
+  file: { data: Buffer, contentType: String },
+  owner: Schema.ObjectId
 });
 
 module.exports = mongoose.model('Certificates', CertificatesSchema);

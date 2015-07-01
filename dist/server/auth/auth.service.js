@@ -30,12 +30,6 @@ function isAuthenticated() {
         if (err) return next(err);
         if (!user) return res.send(401);
 
-        if(req.client.authorized){
-          user.certed = true;
-        }else{
-          user.certed = false;
-        }
-
         req.user = user;
         next();
       });

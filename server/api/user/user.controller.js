@@ -5,6 +5,7 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var fs = require('fs');
+var CA = require('../../CA/CA');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -15,7 +16,7 @@ var validationError = function(res, err) {
  * restriction: 'admin'
  */
 exports.index = function(req, res) {
-  User.find({}, '-salt -hashedPassword', function (err, users) {
+  User.find({}, '-salt -hashedPassword -cert.data', function (err, users) {
     if(err) return res.send(500, err);
     res.json(200, users);
   });
@@ -56,7 +57,14 @@ exports.destroy = function(req, res) {
 };
 
 exports.download = function(req, res) {
-  res.download('./server/cert/client1.pfx','client1.pfx');
+  User.findById(req.params.id, function (err, user) {
+    if(err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+
+    res.setHeader('Content-disposition', 'attachment; filename=cert.pfx');
+    res.setHeader('Content-type','application/x-pkcs12');
+    return res.end(user.cert.data);
+  });
 };
 /**
  * Deletes a user
@@ -75,7 +83,12 @@ exports.activate = function(req, res) {
   adr.street= data.street;
   adr.state= data.state;
   adr.country = data.country;
-  User.findByIdAndUpdate(req.params.id,{activated:true, adr:adr, idnr: data.idnr}, function(err, user) {
+
+  var cert = {};
+  cert.data = CA.createClientCertificate();
+  cert.created = true;
+
+  User.findByIdAndUpdate(req.params.id,{activated:true, adr:adr, idnr: data.idnr, cert: cert}, function(err, user) {
     if(err) return res.send(500, err);
     return res.send(204);
   });
@@ -109,9 +122,18 @@ exports.me = function(req, res, next) {
   var userId = req.user._id;
   User.findOne({
     _id: userId
-  }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
+  }, '-salt -hashedPassword -cert', function(err, user) { // don't ever give out the password or salt
+
+
     if (err) return next(err);
     if (!user) return res.json(401);
+    console.log(req.client.authorized);
+    if(req.client.authorized){
+      user.certed = true;
+    }else{
+      user.certed = false;
+    }
+    console.log(user);
     res.json(user);
   });
 };
