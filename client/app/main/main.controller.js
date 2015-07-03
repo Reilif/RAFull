@@ -16,6 +16,10 @@ angular.module('raApp')
       $scope.newThing = '';
     };
 
+    $scope.clickThing = function(thing) {
+      window.open('/presi/'+thing.info+'/index.html');
+    };
+
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };

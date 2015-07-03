@@ -21,9 +21,9 @@ mongoose.connect(config.mongo.uri, config.mongo.options);
 if(config.seedDB) { require('./config/seed'); }
 
 var options = {
-  key: fs.readFileSync('server/cert/ra-key.pem'),
-  cert: fs.readFileSync('server/cert/ra-cert.crt'),
-  ca: fs.readFileSync('server/cert/ca-root-cert.crt'),
+  key: fs.readFileSync('server/cert/ra.key.pem'),
+  cert: fs.readFileSync('server/cert/ra.cert.pem'),
+  ca: fs.readFileSync('server/cert/ca-chain.cert.pem'),
   requestCert:        true,
   rejectUnauthorized: false
 }
