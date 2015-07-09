@@ -4,6 +4,7 @@ angular.module('raApp')
   .controller('MycertificatesCtrl', function ($scope,  $http, Auth) {
     $scope.certificates = [];
     var user = Auth.getCurrentUser();
+    $scope.user = Auth.getCurrentUser();
     $scope.formdata={userid: user._id};
     $http.get('/api/certificatess/my/'+user._id).success(function(certificates) {
       $scope.certificates = certificates;

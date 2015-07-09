@@ -56,6 +56,11 @@ angular.module('raApp').controller('ModalInstanceCtrl', function ($scope, $modal
   $scope.data = {};
   $scope.data.user = user;
 
+  $scope.data.street = "PKI42";
+  $scope.data.zip = "Minden";
+  $scope.data.state = "NRW";
+  $scope.data.country = "DE";
+  $scope.data.idnr = "Robin Rasch";
 
   $scope.ok = function () {
     $modalInstance.close($scope.data);

@@ -6,7 +6,7 @@
 // You will need to set these on the server you deploy to.
 
 module.exports = {
-  DOMAIN:           'http://localhost:9000',
+  DOMAIN:           'https://localhost:443',
   SESSION_SECRET:   'ra-secret',
 
   // Control debug level for modules using visionmedia/debug

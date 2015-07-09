@@ -84,13 +84,19 @@ exports.activate = function(req, res) {
   adr.state= data.state;
   adr.country = data.country;
 
-  var cert = {};
-  cert.data = CA.createClientCertificate();
-  cert.created = true;
 
-  User.findByIdAndUpdate(req.params.id,{activated:true, adr:adr, idnr: data.idnr, cert: cert}, function(err, user) {
+  User.findByIdAndUpdate(req.params.id,{activated:true, adr:adr, idnr: data.idnr}, function(err, user) {
     if(err) return res.send(500, err);
-    return res.send(204);
+    CA.createClientCertificate(user, function(data){
+      var cert = {};
+      cert.data = data;
+      cert.created = true;
+
+      User.findByIdAndUpdate(req.params.id,{cert: cert}, function(err, user) {
+        if(err) return res.send(500, err);
+        return res.send(204);
+      });
+    });
   });
 };
 

@@ -13,7 +13,6 @@ module.exports = function(app) {
   app.use('/api/certificatess', require('./api/certificates'));
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
-  app.use('/presi', express.static("presi"));
 
   app.use('/auth', require('./auth'));
 

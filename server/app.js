@@ -23,9 +23,10 @@ if(config.seedDB) { require('./config/seed'); }
 var options = {
   key: fs.readFileSync('server/cert/ra.key.pem'),
   cert: fs.readFileSync('server/cert/ra.cert.pem'),
-  ca: fs.readFileSync('server/cert/ca-chain.cert.pem'),
+  ca: [fs.readFileSync('server/cert/intermediate.cert.pem'), fs.readFileSync('server/cert/ca-chain.cert.pem'),fs.readFileSync('server/cert/ca.cert.pem')],
   requestCert:        true,
-  rejectUnauthorized: false
+  rejectUnauthorized: false,
+  agent: false
 }
 
 // Setup server
@@ -33,6 +34,9 @@ var app = express();
 var server = https.createServer(options,app);
 require('./config/express')(app);
 require('./routes')(app);
+
+
+console.log(config.ip);
 
 // Start server
 server.listen(config.port, config.ip, function () {
