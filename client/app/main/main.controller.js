@@ -17,7 +17,7 @@ angular.module('raApp')
     };
 
     $scope.clickThing = function(thing) {
-      window.open('/presi/'+thing.info+'/index.html');
+      window.open('http://vm02.srvhub.de:8000/'+thing.info);
     };
 
     $scope.deleteThing = function(thing) {

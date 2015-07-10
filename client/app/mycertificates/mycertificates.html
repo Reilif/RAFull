@@ -8,21 +8,21 @@
     <th>Erstellungsdatum</th>
     <th>Ablaufdatum</th>
     <th>Download</th>
-    <th class="pull-right">Löschen</th>
+    <th class="pull-right">Revoke</th>
     </thead>
     <tbody>
     <tr ng-repeat="cert in certificates">
       <td>{{cert.name}}</td>
-      <td>{{cert.date}}</td>
-      <td>{{cert.revokeDate}}</td>
+      <td>{{cert.date | date:'medium'}}</td>
+      <td>{{cert.revokeDate | date:'medium'}}</td>
       <td>
 
-      <button type="button" class="btn btn-primary " ng-click="download(cert)">
+      <button type="button" class="btn btn-primary " ng-click="download(cert)" ng-hide="cert.revoked">
         Zertifikat downloaden
       </button>
       </td>
       <td>
-        <a ng-click="delete(cert)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+        <a ng-click="deleteCert(cert)"  class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
       </td>
     </tr>
     </tbody>
@@ -33,8 +33,4 @@
           url="/api/certificatess/"
           param="file"
           on-success="onSuccess(response)" data="formdata">Upload</upload-button>
-
-  <button type="button" class="btn btn-primary " ng-click="download(user)">
-    Zertifikat downloaden
-  </button>
 </div>

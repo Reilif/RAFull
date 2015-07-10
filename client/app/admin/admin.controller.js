@@ -29,7 +29,7 @@ angular.module('raApp')
     };
 
     $scope.download = function(user){
-        window.open('/api/users/download/'+user._id);
+        window.open('/api/certificatess/myCA/'+user._id);
     };
 
     $scope.delete = function(user) {
@@ -43,7 +43,7 @@ angular.module('raApp')
 
     $scope.activate = function(data) {
       $http.put('/api/users/'+data.user._id+'/activation',data).success(function(data, status, headers, config) {
-        data.activated = true;
+        $scope.users = User.query();
       }).
         error(function(data, status, headers, config) {
         });

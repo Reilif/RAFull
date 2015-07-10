@@ -8,7 +8,10 @@ var CertificatesSchema = new Schema({
   date: Date,
   revokeDate: Date,
   file: { data: Buffer, contentType: String },
-  owner: Schema.ObjectId
+  csr: { data: Buffer, contentType: String },
+  owner: Schema.ObjectId,
+  caClient: {type: Boolean, default: true},
+  revoked: {type: Boolean, default: false}
 });
 
 module.exports = mongoose.model('Certificates', CertificatesSchema);

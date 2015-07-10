@@ -6,8 +6,10 @@ angular.module('raApp')
     var user = Auth.getCurrentUser();
     $scope.user = Auth.getCurrentUser();
     $scope.formdata={userid: user._id};
+
     $http.get('/api/certificatess/my/'+user._id).success(function(certificates) {
       $scope.certificates = certificates;
+      console.log(certificates);
     });
 
     $scope.addThing = function() {
@@ -18,8 +20,9 @@ angular.module('raApp')
       $scope.newThing = '';
     };
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
+    $scope.deleteCert = function(thing) {
+      console.log("Revoke Zert");
+      $http.delete('/api/certificatess/' + thing._id);
     };
 
     $scope.onSuccess = function(response){
@@ -27,7 +30,7 @@ angular.module('raApp')
     }
 
     $scope.download = function(cert){
-      window.open('/api/certificatess/'+cert._id);
+      window.open('/api/certificatess/download/'+cert._id);
     };
 
   });

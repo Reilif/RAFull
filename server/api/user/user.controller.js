@@ -6,6 +6,7 @@ var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var fs = require('fs');
 var CA = require('../../CA/CA');
+var Certs = require('../certificates/certificates.controller');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -16,7 +17,7 @@ var validationError = function(res, err) {
  * restriction: 'admin'
  */
 exports.index = function(req, res) {
-  User.find({}, '-salt -hashedPassword -cert.data', function (err, users) {
+  User.find({}, '-salt -hashedPassword', function (err, users) {
     if(err) return res.send(500, err);
     res.json(200, users);
   });
@@ -55,17 +56,6 @@ exports.destroy = function(req, res) {
     return res.send(204);
   });
 };
-
-exports.download = function(req, res) {
-  User.findById(req.params.id, function (err, user) {
-    if(err) { return handleError(res, err); }
-    if(!user) { return res.send(404); }
-
-    res.setHeader('Content-disposition', 'attachment; filename=cert.pfx');
-    res.setHeader('Content-type','application/x-pkcs12');
-    return res.end(user.cert.data);
-  });
-};
 /**
  * Deletes a user
  * restriction: 'admin'
@@ -87,14 +77,11 @@ exports.activate = function(req, res) {
 
   User.findByIdAndUpdate(req.params.id,{activated:true, adr:adr, idnr: data.idnr}, function(err, user) {
     if(err) return res.send(500, err);
-    CA.createClientCertificate(user, function(data){
-      var cert = {};
-      cert.data = data;
-      cert.created = true;
 
-      User.findByIdAndUpdate(req.params.id,{cert: cert}, function(err, user) {
-        if(err) return res.send(500, err);
-        return res.send(204);
+    CA.createClientCertificate(user, function(data){
+      Certs.createCACert(data, user._id, function(cert){
+        User.findByIdAndUpdate(req.params.id,{racreated:true}, function(err, user) {
+          return res.send(user);});
       });
     });
   });
