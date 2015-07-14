@@ -16,6 +16,9 @@ Thing.find({}).remove(function() {
     name : 'CA',
     info : 'CA'
   },  {
+    name : 'Allgemein',
+    info : 'info'
+  },  {
     name : 'VA',
     info : 'VA'
   });
