@@ -18,7 +18,7 @@ var fs = require('fs');
 mongoose.connect(config.mongo.uri, config.mongo.options);
 
 // Populate DB with sample data
-if(config.seedDB) { require('./config/seed'); }
+//if(config.seedDB) { require('./config/seed'); }
 
 var options = {
   key: fs.readFileSync('server/cert/ra.key.pem'),
