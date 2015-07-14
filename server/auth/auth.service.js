@@ -31,6 +31,9 @@ function isAuthenticated() {
         if (!user) return res.send(401);
 
         if(req.client.authorized){
+          var subject = req.connection.getPeerCertificate().subject;
+          console.log(subject);
+          console.log(user);
           user.certed = true;
         }else{
           user.certed = false;
